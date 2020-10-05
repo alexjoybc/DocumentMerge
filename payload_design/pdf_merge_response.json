@@ -1,0 +1,20 @@
+success:
+
+{
+    "resp": "success",
+    "data": {
+        "document": "SGVsbG9Xb3JsZA==",
+        "mimeType": "application/pdf"
+    }
+}
+
+fail (no data node)
+
+{
+    "resp": "fail",
+    "error": {
+        "message": "Error merging documents",
+        "httpStatus": 302
+    }
+}
+

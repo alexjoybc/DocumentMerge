@@ -1,0 +1,19 @@
+{
+   "options":{
+      "quitOnFailure":true
+   },
+   "documents":[
+      {
+         "id":"optional",
+         "mediaType":"pdf",
+         "placement":1,
+         "data":"SGVsbG9Xb3JsZA=="
+      },
+      {
+         "id":"optional",
+         "mediaType":"pdf",
+         "placement":2,
+         "data":"SGVsbG9Xb3JsZA=="
+      }
+   ]
+}
