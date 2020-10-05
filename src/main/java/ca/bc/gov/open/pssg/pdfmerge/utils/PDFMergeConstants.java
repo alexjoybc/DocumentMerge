@@ -17,7 +17,7 @@ public final class PDFMergeConstants {
     public static final String JSON_RESPONSE_SUCCESS = "success";
     public static final String JSON_RESPONSE_FAIL = "fail";
     
-    public static final String NOT_PROCESSED_ERROR = "Request cannot be processed";
+    public static final String NOT_PROCESSED_ERROR = "Request cannot be processed. See logging for correlation id %s";
 	
 	// rest response media type
 	public static final String JSON_CONTENT = "application/json";
