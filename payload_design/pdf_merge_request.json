@@ -1,6 +1,7 @@
 {
    "options":{
-      "quitOnFailure":true
+      "quitOnFailure":true,
+      "forcePDFAOnLoad": true
    },
    "documents":[
       {
