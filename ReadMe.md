@@ -14,3 +14,4 @@ http://localhost:8082/pdfmerge/merge/{correlationId}
 
 ## Building AEM tools with Maven
 https://helpx.adobe.com/ca/experience-manager/6-3/sites/developing/using/ht-projects-maven.html
+https://helpx.adobe.com/aem-forms/6/aem-livecycle-connector.html#AdobeLiveCycleAssemblerClientbundle
