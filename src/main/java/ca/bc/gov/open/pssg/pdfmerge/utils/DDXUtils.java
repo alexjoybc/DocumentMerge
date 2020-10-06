@@ -46,13 +46,12 @@ public class DDXUtils {
 			
 			// Create the root element and append it to the XML DOM
 			Element root = (Element) document.createElement("DDX");
-			//root.setAttribute("xmlns", "https://ns.adobe.com/DDX/1.0/");
-			root.setAttribute("xmlns", "http://ns.adobe.com/DDX/1.0/");
+			root.setAttribute("xmlns", PDFMergeConstants.DDX_NAMESPACE);
 			document.appendChild(root);
 			
 			// Create the PDFsFromBookmarks element
 			Element PDFs = (Element) document.createElement("PDF");
-			PDFs.setAttribute("result", "out.pdf");
+			PDFs.setAttribute("result", PDFMergeConstants.DDX_OUTPUT_NAME);
 			root.appendChild(PDFs);
 			
 			// Add each pageId element to the DDX

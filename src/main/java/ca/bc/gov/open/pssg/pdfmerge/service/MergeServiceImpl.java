@@ -77,7 +77,6 @@ public class MergeServiceImpl implements MergeService {
 			
 			// Create a Map object to store PDF source documents
 			Map<String, Object> inputs = new HashMap<String, Object>();
-			
 			Iterator<MergePage> it = pageList.iterator();
 		    while(it.hasNext()) {
 		      MergePage pageElement = (MergePage)it.next();
