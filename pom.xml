@@ -43,7 +43,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -64,18 +63,95 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
 		<!-- logback -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 		</dependency>
+	
+		<dependency>
+		    <groupId>org.apache.axis</groupId>
+		    <artifactId>axis</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis-jaxrpc</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- Apache common libs -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-discovery</groupId>
+		    <artifactId>commons-discovery</artifactId>
+		    <version>0.5</version>
+		</dependency>
+
+		<!-- Adobe commons libs -->
+		<dependency>
+			<groupId>com.adobe.livecycle</groupId>
+			<artifactId>adobe-livecycle-client</artifactId>
+			<version>11.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.adobe.livecycle</groupId>
+			<artifactId>adobe-usermanager-client</artifactId>
+			<version>11.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.adobe.livecycle</groupId>
+			<artifactId>adobe-assembler-client</artifactId>
+			<version>11.0.0</version>
+		</dependency>
+
+		<!-- Adobe AEM UberJar for AEM, version 6.2.0 -->
+		<dependency>
+			<groupId>com.adobe.aem</groupId>
+			<artifactId>uber-jar</artifactId>
+			<version>6.3.0</version>
+			<classifier>apis</classifier>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>wsdl4j</groupId>
+		    <artifactId>wsdl4j</artifactId>
+		    <version>1.6.3</version>
+		</dependency>
+		
+
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>adobe-public-releases</id>
+			<name>Adobe Public Repository</name>
+			<url>https://repo.adobe.com/nexus/content/groups/public/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>adobe-public-releases</id>
+			<name>Adobe Public Repository</name>
+			<url>https://repo.adobe.com/nexus/content/groups/public/</url>
+			<layout>default</layout>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
 		<plugins>

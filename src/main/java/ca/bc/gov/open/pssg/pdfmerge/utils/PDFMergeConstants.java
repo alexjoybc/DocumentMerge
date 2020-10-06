@@ -24,5 +24,9 @@ public final class PDFMergeConstants {
 	
 	// mime types
 	public static final String PDF_MIME_TYPE = "application/pdf"; 
+	
+	//DDX output name
+	public static final String DDX_OUTPUT_NAME = "out.pdf";
+	public static final String DDX_NAMESPACE = "http://ns.adobe.com/DDX/1.0/";
  
 }

@@ -46,13 +46,12 @@ public class DDXUtils {
 			
 			// Create the root element and append it to the XML DOM
 			Element root = (Element) document.createElement("DDX");
-			//root.setAttribute("xmlns", "https://ns.adobe.com/DDX/1.0/");
-			root.setAttribute("xmlns", "http://ns.adobe.com/DDX/1.0/");
+			root.setAttribute("xmlns", PDFMergeConstants.DDX_NAMESPACE);
 			document.appendChild(root);
 			
 			// Create the PDFsFromBookmarks element
 			Element PDFs = (Element) document.createElement("PDF");
-			PDFs.setAttribute("result", "out.pdf");
+			PDFs.setAttribute("result", PDFMergeConstants.DDX_OUTPUT_NAME);
 			root.appendChild(PDFs);
 			
 			// Add each pageId element to the DDX
@@ -69,51 +68,53 @@ public class DDXUtils {
 		return document;
 	}
 	
-//	/**
-//	 * 
-//	 * @param ddx
-//	 * @return
-//	 */
-//	public static com.adobe.idp.Document convertDDX(Document ddx) {
-//		
-//		byte[] mybytes = null;
-//		
-//		try {
-//			// Create a Java Transformer object
-//			TransformerFactory transFact = TransformerFactory.newInstance();
-//			Transformer transForm = transFact.newTransformer();
-//			
-//			// Create a Java ByteArrayOutputStream object
-//			ByteArrayOutputStream myOutStream = new ByteArrayOutputStream();
-//			
-//			// Create a Java Source object
-//			javax.xml.transform.dom.DOMSource myInput = new DOMSource(ddx);
-//			
-//			// Create a Java Result object
-//			javax.xml.transform.stream.StreamResult myOutput = new StreamResult(myOutStream);
-//			
-//			// Populate the Java ByteArrayOutputStream object
-//			transForm.transform(myInput, myOutput);
-//			
-//			// Get the size of the ByteArrayOutputStream buffer
-//			int myByteSize = myOutStream.size();
-//			
-//			// Allocate myByteSize to the byte array
-//			mybytes = new byte[myByteSize];
-//			
-//			// Copy the content to the byte array
-//			mybytes = myOutStream.toByteArray();
-//			
-//		} catch (Exception e) {
-//			System.out.println("The following exception occurred: " + e.getMessage());
-//		}
-//		
-//		// Create a com.adobe.idp.Document object and copy the
-//		// contents of the byte array
-//		com.adobe.idp.Document myDocument = new com.adobe.idp.Document(mybytes);
-//		return myDocument;
-//
-//	}
+	/**
+	 * 
+	 * Converts between org.w3c.dom.Document and com.adobe.idp.Document types. 
+	 * 
+	 * @param ddx
+	 * @return
+	 */
+	public static com.adobe.idp.Document convertDDX(Document ddx) {
+		
+		byte[] mybytes = null;
+		
+		try {
+			// Create a Java Transformer object
+			TransformerFactory transFact = TransformerFactory.newInstance();
+			Transformer transForm = transFact.newTransformer();
+			
+			// Create a Java ByteArrayOutputStream object
+			ByteArrayOutputStream myOutStream = new ByteArrayOutputStream();
+			
+			// Create a Java Source object
+			javax.xml.transform.dom.DOMSource myInput = new DOMSource(ddx);
+			
+			// Create a Java Result object
+			javax.xml.transform.stream.StreamResult myOutput = new StreamResult(myOutStream);
+			
+			// Populate the Java ByteArrayOutputStream object
+			transForm.transform(myInput, myOutput);
+			
+			// Get the size of the ByteArrayOutputStream buffer
+			int myByteSize = myOutStream.size();
+			
+			// Allocate myByteSize to the byte array
+			mybytes = new byte[myByteSize];
+			
+			// Copy the content to the byte array
+			mybytes = myOutStream.toByteArray();
+			
+		} catch (Exception e) {
+			System.out.println("The following exception occurred: " + e.getMessage());
+		}
+		
+		// Create a com.adobe.idp.Document object and copy the
+		// contents of the byte array
+		com.adobe.idp.Document myDocument = new com.adobe.idp.Document(mybytes);
+		return myDocument;
+
+	}
 	
 	/**
 	 * 
