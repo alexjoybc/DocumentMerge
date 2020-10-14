@@ -10,6 +10,7 @@ import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import com.adobe.livecycle.assembler.client.AssemblerOptionSpec;
 import com.adobe.livecycle.assembler.client.AssemblerResult;
 import com.adobe.livecycle.assembler.client.AssemblerServiceClient;
 
+import ca.bc.gov.open.pssg.pdfmerge.config.ConfigProperties;
 import ca.bc.gov.open.pssg.pdfmerge.exception.PDFMergeException;
 import ca.bc.gov.open.pssg.pdfmerge.model.MergePage;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
@@ -36,6 +38,9 @@ import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeConstants;
 public class MergeServiceImpl implements MergeService {
 
 	private final Logger logger = LoggerFactory.getLogger(MergeServiceImpl.class);
+	
+	@Autowired
+	private ConfigProperties properties;
 
 	@Override
 	public PDFMergeResponse mergeDocuments(PDFMergeRequest request, String correlationId) throws PDFMergeException {
@@ -49,11 +54,11 @@ public class MergeServiceImpl implements MergeService {
 			// Set connection properties required to invoke AEM Forms using SOAP mode
 			// These will be fetched either from OpenShift Secrets or Java properties file depending on the hosting environment. 
 			Properties connectionProps = new Properties();
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_DEFAULT_SOAP_ENDPOINT, "http://sarcee.bcgov:8080");
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_DEFAULT_SOAP_ENDPOINT, properties.getAemServiceEndpoint());
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_TRANSPORT_PROTOCOL, ServiceClientFactoryProperties.DSC_SOAP_PROTOCOL);
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_SERVER_TYPE, "JBoss");
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_USERNAME, "einfo");
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, "einfo999");
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_USERNAME, properties.getAemServiceUser());
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, properties.getAemServicePassword());
 
 			// Create a ServiceClientFactory instance
 			ServiceClientFactory myFactory = ServiceClientFactory.createInstance(connectionProps);

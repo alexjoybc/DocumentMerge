@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 
- * Externalized configuration for easy access to properties
+ * Externalize configuration for easy access to properties
  * 
  * @author shaunmillargov
  *
@@ -14,6 +14,9 @@ public class ConfigProperties {
 
 	private String serviceApiVersion; 
 	private boolean serviceSwaggerEnabled;
+	private String aemServiceEndpoint; 
+	private String aemServiceUser;
+	private String aemServicePassword;
 	
 	public String getServiceApiVersion() {
 		return serviceApiVersion;
@@ -29,6 +32,30 @@ public class ConfigProperties {
 
 	public void setServiceSwaggerEnabled(boolean serviceSwaggerEnabled) {
 		this.serviceSwaggerEnabled = serviceSwaggerEnabled;
+	}
+
+	public String getAemServiceEndpoint() {
+		return aemServiceEndpoint;
+	}
+
+	public void setAemServiceEndpoint(String aemServiceEndpoint) {
+		this.aemServiceEndpoint = aemServiceEndpoint;
+	}
+
+	public String getAemServiceUser() {
+		return aemServiceUser;
+	}
+
+	public void setAemServiceUser(String aemServiceUser) {
+		this.aemServiceUser = aemServiceUser;
+	}
+
+	public String getAemServicePassword() {
+		return aemServicePassword;
+	}
+
+	public void setAemServicePassword(String aemServicePassword) {
+		this.aemServicePassword = aemServicePassword;
 	}
 	
 }
