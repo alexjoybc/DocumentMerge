@@ -36,11 +36,11 @@ public class MergeController {
 			@PathVariable(value = "correlationId", required = true) String correlationId, 
 			@Valid @RequestBody(required = true)  PDFMergeRequest request)  {
 		
-		logger.info("Merge starting..");
+		logger.info("Starting merge process...");
 		
 		try {
 			
-			PDFMergeResponse mergResp = mergeService.mergeDocuments(request, correlationId);
+			PDFMergeResponse mergResp = mergeService.mergePDFDocuments(request, correlationId);
 			JSONResponse<PDFMergeResponse> resp = new JSONResponse<>(mergResp);
 			logger.info("Merge complete.");
 			return new ResponseEntity<>(resp, HttpStatus.OK);

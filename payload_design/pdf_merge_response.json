@@ -8,7 +8,7 @@ success:
     }
 }
 
-fail (no data node)
+fail enveloped (no data node)
 
 {
     "resp": "fail",

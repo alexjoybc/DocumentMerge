@@ -13,7 +13,7 @@ import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
  */
 public interface MergeService {
 
-	public PDFMergeResponse mergeDocuments(PDFMergeRequest request, String correlationId) throws PDFMergeException; 
+	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws PDFMergeException; 
 	
 }
 

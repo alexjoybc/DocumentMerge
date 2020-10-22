@@ -43,7 +43,7 @@ public class MergeServiceImpl implements MergeService {
 	private ConfigProperties properties;
 
 	@Override
-	public PDFMergeResponse mergeDocuments(PDFMergeRequest request, String correlationId) throws PDFMergeException {
+	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws PDFMergeException {
 		
 		PDFMergeResponse resp = new PDFMergeResponse();
 		
@@ -67,6 +67,7 @@ public class MergeServiceImpl implements MergeService {
 			AssemblerServiceClient assemblerClient = new AssemblerServiceClient(myFactory);
 			
 			// Create 2 page objects. 
+			// swap out with incoming document objects. 
 			MergePage mp1 = new MergePage(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\RecordOfProceedings_1.5_pdfa.pdf")));
 			MergePage mp2 = new MergePage(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\ReleaseOrder_1.5_pdfa.pdf")));
 			
@@ -95,13 +96,14 @@ public class MergeServiceImpl implements MergeService {
 
  			// Submit the job to Assembler service
  			AssemblerResult jobResult = assemblerClient.invokeDDX(myDDX, inputs, assemblerSpec);
- 			Map allDocs = jobResult.getDocuments();
+ 			Map<String, Document> allDocs = jobResult.getDocuments();
 
  			// Retrieve the result PDF document from the Map object
  			Document outDoc = null;
  			
  			// Iterate through the map object to retrieve the result PDF document
 			for (Iterator i = allDocs.entrySet().iterator(); i.hasNext();) {
+				
 				// Retrieve the Map object’s value
 				Map.Entry e = (Map.Entry) i.next();
 
@@ -113,6 +115,7 @@ public class MergeServiceImpl implements MergeService {
 					outDoc = (Document) o;
 
 					// Save the result PDF file
+					// TODO - swap out with stuffing of response object
 					File myOutFile = new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\output\\out.pdf");
 					outDoc.copyToFile(myOutFile);
 				}
