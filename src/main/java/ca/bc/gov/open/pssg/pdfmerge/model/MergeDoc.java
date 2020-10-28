@@ -2,14 +2,21 @@ package ca.bc.gov.open.pssg.pdfmerge.model;
 
 import java.util.UUID;
 
-public class MergePage {
+/**
+ * 
+ * Represents a single input document for merging.
+ * 
+ * @author shaunmillargov
+ *
+ */
+public class MergeDoc {
 	
 	private String id; 
 	private byte[] file;
 	private String errorCd = null;
 	private String errorMsg = null;
 
-	public MergePage(byte[] file) {
+	public MergeDoc(byte[] file) {
 		UUID uniqueKey = UUID.randomUUID();
 		this.id = uniqueKey.toString();
 		this.file = file; 

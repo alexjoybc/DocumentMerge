@@ -23,13 +23,15 @@ import com.adobe.livecycle.assembler.client.AssemblerServiceClient;
 
 import ca.bc.gov.open.pssg.pdfmerge.config.ConfigProperties;
 import ca.bc.gov.open.pssg.pdfmerge.exception.PDFMergeException;
-import ca.bc.gov.open.pssg.pdfmerge.model.MergePage;
+import ca.bc.gov.open.pssg.pdfmerge.model.MergeDoc;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
 import ca.bc.gov.open.pssg.pdfmerge.utils.DDXUtils;
 import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeConstants;
 
 /**
+ * 
+ * PDF Merge service. 
  * 
  * @author shaunmillargov
  *
@@ -51,12 +53,12 @@ public class MergeServiceImpl implements MergeService {
 			
 			logger.info("Calling mergeDocuments...");
 			
-			// Set connection properties required to invoke AEM Forms using SOAP mode
-			// These will be fetched either from OpenShift Secrets or Java properties file depending on the hosting environment. 
+			// Set AEM connection properties, SOAP mode. 
+			// Properties are fetched from either OpenShift Secrets or if running locally, ENV VARIABLES. 
 			Properties connectionProps = new Properties();
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_DEFAULT_SOAP_ENDPOINT, properties.getAemServiceEndpoint());
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_TRANSPORT_PROTOCOL, ServiceClientFactoryProperties.DSC_SOAP_PROTOCOL);
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_SERVER_TYPE, "JBoss");
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_SERVER_TYPE, PDFMergeConstants.DSC_SERVER_TYPE_JBOSS);
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_USERNAME, properties.getAemServiceUser());
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, properties.getAemServicePassword());
 
@@ -68,24 +70,24 @@ public class MergeServiceImpl implements MergeService {
 			
 			// Create 2 page objects. 
 			// swap out with incoming document objects. 
-			MergePage mp1 = new MergePage(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\RecordOfProceedings_1.5_pdfa.pdf")));
-			MergePage mp2 = new MergePage(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\ReleaseOrder_1.5_pdfa.pdf")));
+			MergeDoc mp1 = new MergeDoc(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\RecordOfProceedings_1.5_pdfa.pdf")));
+			MergeDoc mp2 = new MergeDoc(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\ReleaseOrder_1.5_pdfa.pdf")));
 			
 			// Java LinkedList serves to maintain incoming order of PDFs
-			LinkedList<MergePage> pageList=new LinkedList<MergePage>();
+			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
 			pageList.add(mp1);
 		    pageList.add(mp2);
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 
 			org.w3c.dom.Document aDDx = DDXUtils.createMergeDDX(pageList);
-			System.out.println(DDXUtils.DDXDocumentToString(aDDx));
+			logger.debug(DDXUtils.DDXDocumentToString(aDDx));
 			Document myDDX = DDXUtils.convertDDX(aDDx);
 			
-			// Create a Map object to store PDF source documents
+			// Create a Map object to store the PDF source documents
 			Map<String, Object> inputs = new HashMap<String, Object>();
-			Iterator<MergePage> it = pageList.iterator();
+			Iterator<MergeDoc> it = pageList.iterator();
 		    while(it.hasNext()) {
-		      MergePage pageElement = (MergePage)it.next();
+		      MergeDoc pageElement = (MergeDoc)it.next();
 			  Document pageDocument = new Document(pageElement.getFile());
 			  inputs.put(pageElement.getId(), (Object)pageDocument);
 		    }
@@ -110,7 +112,7 @@ public class MergeServiceImpl implements MergeService {
 				// Get the key name as specified in the
 				// DDX document
 				String keyName = (String) e.getKey();
-				if (keyName.equalsIgnoreCase("out.pdf")) {
+				if (keyName.equalsIgnoreCase(PDFMergeConstants.DDX_OUTPUT_NAME)) {
 					Object o = e.getValue();
 					outDoc = (Document) o;
 

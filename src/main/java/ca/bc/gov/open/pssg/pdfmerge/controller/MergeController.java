@@ -42,7 +42,7 @@ public class MergeController {
 			
 			PDFMergeResponse mergResp = mergeService.mergePDFDocuments(request, correlationId);
 			JSONResponse<PDFMergeResponse> resp = new JSONResponse<>(mergResp);
-			logger.info("Merge complete.");
+			logger.info("Merge process complete.");
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 			
 		} catch (PDFMergeException e) {

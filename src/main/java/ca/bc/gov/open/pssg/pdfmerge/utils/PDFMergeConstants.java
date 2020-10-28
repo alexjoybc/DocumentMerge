@@ -28,5 +28,8 @@ public final class PDFMergeConstants {
 	//DDX output name
 	public static final String DDX_OUTPUT_NAME = "out.pdf";
 	public static final String DDX_NAMESPACE = "http://ns.adobe.com/DDX/1.0/";
+	
+	// AEM connection server types 
+	public static final String DSC_SERVER_TYPE_JBOSS = "JBoss";
  
 }

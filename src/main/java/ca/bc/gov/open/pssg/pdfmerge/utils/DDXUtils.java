@@ -15,7 +15,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import ca.bc.gov.open.pssg.pdfmerge.model.MergePage;
+import ca.bc.gov.open.pssg.pdfmerge.model.MergeDoc;
 
 
 
@@ -32,7 +32,7 @@ public class DDXUtils {
 	 * 
 	 * @return
 	 */
-	public static Document createMergeDDX(LinkedList<MergePage> pageList) {
+	public static Document createMergeDDX(LinkedList<MergeDoc> pageList) {
 
 		Document document = null;
 		try {
@@ -49,7 +49,7 @@ public class DDXUtils {
 			root.setAttribute("xmlns", PDFMergeConstants.DDX_NAMESPACE);
 			document.appendChild(root);
 			
-			// Create the PDFsFromBookmarks element
+			// Create the output element
 			Element PDFs = (Element) document.createElement("PDF");
 			PDFs.setAttribute("result", PDFMergeConstants.DDX_OUTPUT_NAME);
 			root.appendChild(PDFs);
