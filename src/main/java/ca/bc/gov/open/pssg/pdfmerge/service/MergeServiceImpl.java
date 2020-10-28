@@ -8,11 +8,13 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 import com.adobe.idp.Document;
 import com.adobe.idp.dsc.clientsdk.ServiceClientFactory;
@@ -70,13 +72,22 @@ public class MergeServiceImpl implements MergeService {
 			
 			// Create 2 page objects. 
 			// swap out with incoming document objects. 
-			MergeDoc mp1 = new MergeDoc(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\RecordOfProceedings_1.5_pdfa.pdf")));
-			MergeDoc mp2 = new MergeDoc(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\ReleaseOrder_1.5_pdfa.pdf")));
+			//MergeDoc mp1 = new MergeDoc(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\RecordOfProceedings_1.5_pdfa.pdf")));
+			//MergeDoc mp2 = new MergeDoc(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\ReleaseOrder_1.5_pdfa.pdf")));
+			//MergeDoc mp1 = new MergeDoc(Base64Utils.decode(request.));
+			//MergeDoc mp2 = new MergeDoc(FileUtils.readFileToByteArray(new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\files\\ReleaseOrder_1.5_pdfa.pdf")));
+			
+			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
+			int count = 0; 
+			for (ca.bc.gov.open.pssg.pdfmerge.model.Document doc: request.getDocuments()) {
+				pageList.add( new MergeDoc( Base64Utils.decode(doc.getData().getBytes()) ));
+				logger.debug("Loaded page " + count++);
+			}
 			
 			// Java LinkedList serves to maintain incoming order of PDFs
-			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
-			pageList.add(mp1);
-		    pageList.add(mp2);
+			//LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
+			//pageList.add(mp1);
+		    //pageList.add(mp2);
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 
 			org.w3c.dom.Document aDDx = DDXUtils.createMergeDDX(pageList);
@@ -109,8 +120,7 @@ public class MergeServiceImpl implements MergeService {
 				// Retrieve the Map object’s value
 				Map.Entry e = (Map.Entry) i.next();
 
-				// Get the key name as specified in the
-				// DDX document
+				// Get the key name as specified in the DDX document
 				String keyName = (String) e.getKey();
 				if (keyName.equalsIgnoreCase(PDFMergeConstants.DDX_OUTPUT_NAME)) {
 					Object o = e.getValue();
@@ -118,15 +128,17 @@ public class MergeServiceImpl implements MergeService {
 
 					// Save the result PDF file
 					// TODO - swap out with stuffing of response object
-					File myOutFile = new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\output\\out.pdf");
-					outDoc.copyToFile(myOutFile);
+					//File myOutFile = new File("C:\\Users\\176899\\workspaces\\neon\\pdfmerge\\AEMMergeTest\\output\\out.pdf");
+					//outDoc.copyToFile(myOutFile);
+					
+					resp.setDocument( Base64Utils.encodeToString( IOUtils.toByteArray(outDoc.getInputStream())));					
 				}
 			}
 			
 			logger.info("mergeDocuments completed successfully...");
 			
 			resp.setMimeType(PDFMergeConstants.PDF_MIME_TYPE);
-			resp.setDocument("TODO - base64 encode me");
+			//resp.setDocument("TODO - base64 encode me");
 			
 		} catch (Exception e) {
 			
