@@ -1,5 +1,3 @@
-Sort out what can be pulled from maven and inlcude in pom. 
-Find out if the group of Adobe libraries can be pulled from Maven.
 
-see here about loading libraries locally: 
-https://mkyong.com/maven/how-to-include-library-manully-into-maven-local-repository/
+
+
