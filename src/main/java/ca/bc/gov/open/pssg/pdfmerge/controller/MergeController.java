@@ -21,6 +21,14 @@ import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * Main RESTful controller. 
+ * 
+ * @author shaunmillargov
+ *
+ */
+
 @RestController
 public class MergeController {
 	

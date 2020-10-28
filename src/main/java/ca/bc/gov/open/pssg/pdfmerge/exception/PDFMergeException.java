@@ -3,7 +3,7 @@ package ca.bc.gov.open.pssg.pdfmerge.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * Custom Exception for Digital forms API
+ * Custom Exception for PDF Merge
  * 
  * @author sivakaruna
  */
