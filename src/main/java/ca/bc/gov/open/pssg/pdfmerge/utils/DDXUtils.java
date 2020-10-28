@@ -45,24 +45,24 @@ public class DDXUtils {
 			document = builder.newDocument();
 			
 			// Create the root element and append it to the XML DOM
-			Element root = (Element) document.createElement("DDX");
-			root.setAttribute("xmlns", PDFMergeConstants.DDX_NAMESPACE);
+			Element root = (Element) document.createElement(PDFMergeConstants.DDX_ELEMENT_DDX);
+			root.setAttribute(PDFMergeConstants.DDX_NAMESPACE_ATTRIBUTE, PDFMergeConstants.DDX_NAMESPACE);
 			document.appendChild(root);
 			
 			// Create the output element
-			Element PDFs = (Element) document.createElement("PDF");
-			PDFs.setAttribute("result", PDFMergeConstants.DDX_OUTPUT_NAME);
+			Element PDFs = (Element) document.createElement(PDFMergeConstants.DDX_ELEMENT_PDF);
+			PDFs.setAttribute(PDFMergeConstants.DDX_OUTPUT_ATTRIBUTE, PDFMergeConstants.DDX_OUTPUT_NAME);
 			root.appendChild(PDFs);
 			
 			// Add each pageId element to the DDX
 			for (int i = 0; i < pageList.size(); i++) {
-				Element PDF = (Element) document.createElement("PDF");
-				PDF.setAttribute("source", pageList.get(i).getId());
+				Element PDF = (Element) document.createElement(PDFMergeConstants.DDX_ELEMENT_PDF);
+				PDF.setAttribute(PDFMergeConstants.DDX_SOURCE_ATTRIBUTE, pageList.get(i).getId());
 				PDFs.appendChild(PDF);
 			}
 			
 		} catch (Exception e) {
-			System.out.println("The following exception occurred when creating the mergeDDX: " + e.getMessage());
+			System.out.println("The following exception occurred when creating the merge DDX file: " + e.getMessage());
 		}
 
 		return document;
