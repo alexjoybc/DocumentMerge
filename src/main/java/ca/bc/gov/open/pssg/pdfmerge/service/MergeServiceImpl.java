@@ -72,7 +72,6 @@ public class MergeServiceImpl implements MergeService {
 			AssemblerServiceClient assemblerClient = new AssemblerServiceClient(myFactory);
 			
 			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
-			int count = 0; 
 			
 			// Sort the document based on placement id in the event they are mixed. lowest to highest 
 			Collections.sort(request.getDocuments(), new Comparator<ca.bc.gov.open.pssg.pdfmerge.model.Document>() {
@@ -94,7 +93,7 @@ public class MergeServiceImpl implements MergeService {
 				}
 				
 				pageList.add( new MergeDoc( thisDoc));
-				logger.debug("Loaded page " + count++);
+				logger.debug("Loaded page " + doc.getPlacement());
 			}
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 
