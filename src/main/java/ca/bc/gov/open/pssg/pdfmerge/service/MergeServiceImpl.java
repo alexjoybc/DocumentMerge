@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pssg.pdfmerge.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -72,7 +74,14 @@ public class MergeServiceImpl implements MergeService {
 			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
 			int count = 0; 
 			
-			//TODO - get documents in order of placement. 
+			// Sort the document based on placement id in the event they are mixed. lowest to highest 
+			Collections.sort(request.getDocuments(), new Comparator<ca.bc.gov.open.pssg.pdfmerge.model.Document>() {
+			    public int compare(ca.bc.gov.open.pssg.pdfmerge.model.Document d1, ca.bc.gov.open.pssg.pdfmerge.model.Document d2) {
+			        return d1.getPlacement().compareTo(d2.getPlacement());
+			    }
+			});
+			
+			// For each document, check if XFA and convert to PDF/A if requested via option. 
 			for (ca.bc.gov.open.pssg.pdfmerge.model.Document doc: request.getDocuments()) {
 				
 				byte[] thisDoc = Base64Utils.decode(doc.getData().getBytes()); 
