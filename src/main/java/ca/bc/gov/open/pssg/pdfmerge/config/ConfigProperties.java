@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 
- * Externalize configuration for easy access to properties
+ * Externalize configuration for easy access to properties either as OpenShift Secrets or local Env variables. 
  * 
  * @author shaunmillargov
  *
