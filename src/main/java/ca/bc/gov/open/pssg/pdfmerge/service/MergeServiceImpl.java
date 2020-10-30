@@ -1,5 +1,8 @@
 package ca.bc.gov.open.pssg.pdfmerge.service;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -20,13 +23,18 @@ import com.adobe.idp.dsc.clientsdk.ServiceClientFactoryProperties;
 import com.adobe.livecycle.assembler.client.AssemblerOptionSpec;
 import com.adobe.livecycle.assembler.client.AssemblerResult;
 import com.adobe.livecycle.assembler.client.AssemblerServiceClient;
+import com.adobe.livecycle.docconverter.client.ConversionException;
+import com.adobe.livecycle.docconverter.client.DocConverterServiceClient;
+import com.adobe.livecycle.docconverter.client.PDFAConversionOptionSpec;
+import com.adobe.livecycle.docconverter.client.PDFAConversionResult;
 
 import ca.bc.gov.open.pssg.pdfmerge.config.ConfigProperties;
-import ca.bc.gov.open.pssg.pdfmerge.exception.PDFMergeException;
+import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
 import ca.bc.gov.open.pssg.pdfmerge.model.MergeDoc;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
 import ca.bc.gov.open.pssg.pdfmerge.utils.DDXUtils;
+import ca.bc.gov.open.pssg.pdfmerge.utils.PDFBoxUtilities;
 import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeConstants;
 
 /**
@@ -45,13 +53,13 @@ public class MergeServiceImpl implements MergeService {
 	private ConfigProperties properties;
 
 	@Override
-	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws PDFMergeException {
+	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws MergeException {
 		
 		PDFMergeResponse resp = new PDFMergeResponse();
 		
 		try {
 			
-			logger.info("Calling mergeDocuments...");
+			logger.info("Calling mergePDFDocuments...");
 			
 			// Set AEM connection properties, SOAP mode. 
 			// Properties are fetched from either OpenShift Secrets or if running locally, ENV VARIABLES. 
@@ -63,21 +71,39 @@ public class MergeServiceImpl implements MergeService {
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, properties.getAemServicePassword());
 
 			// Create a ServiceClientFactory instance
-			ServiceClientFactory myFactory = ServiceClientFactory.createInstance(connectionProps);
+			ServiceClientFactory sFactory = ServiceClientFactory.createInstance(connectionProps);
 
 			// Create an AssemblerServiceClient object
-			AssemblerServiceClient assemblerClient = new AssemblerServiceClient(myFactory);
+			AssemblerServiceClient assemblerClient = new AssemblerServiceClient(sFactory);
 			
 			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
-			int count = 0; 
+			
+			// Sort the document based on placement id in the event they are mixed. lowest to highest 
+			Collections.sort(request.getDocuments(), new Comparator<ca.bc.gov.open.pssg.pdfmerge.model.Document>() {
+			    public int compare(ca.bc.gov.open.pssg.pdfmerge.model.Document d1, ca.bc.gov.open.pssg.pdfmerge.model.Document d2) {
+			        return d1.getPlacement().compareTo(d2.getPlacement());
+			    }
+			});
+			
+			// For each document, check if XFA and convert to PDF/A if requested via option. 
 			for (ca.bc.gov.open.pssg.pdfmerge.model.Document doc: request.getDocuments()) {
-				pageList.add( new MergeDoc( Base64Utils.decode(doc.getData().getBytes()) ));
-				logger.debug("Loaded page " + count++);
+				
+				byte[] thisDoc = Base64Utils.decode(doc.getData().getBytes()); 
+				
+				if ( request.getOptions().getForcePDFAOnLoad() && PDFBoxUtilities.isPDFXfa(thisDoc)) {
+					logger.info("forcePDFA is on and document, index " + doc.getPlacement() + ", is XFA. Converting to PDF/A..."); 
+					
+					//call PDF/A transformation 
+					thisDoc = createPDFADocument(thisDoc, sFactory);
+				}
+				
+				pageList.add( new MergeDoc( thisDoc));
+				logger.info("Loaded page " + doc.getPlacement());
 			}
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 
 			org.w3c.dom.Document aDDx = DDXUtils.createMergeDDX(pageList);
-			logger.debug(DDXUtils.DDXDocumentToString(aDDx));
+			logger.info(DDXUtils.DDXDocumentToString(aDDx));
 			Document myDDX = DDXUtils.convertDDX(aDDx);
 			
 			// Create a Map object to store the PDF source documents
@@ -129,10 +155,41 @@ public class MergeServiceImpl implements MergeService {
 			
 			logger.error("Failure at mergeDocuments. Reason: " + e.getMessage());
 			e.printStackTrace();
-			throw new PDFMergeException(e.getMessage(), HttpStatus.NOT_FOUND, e);
+			throw new MergeException(e.getMessage(), HttpStatus.NOT_FOUND, e);
 		}
 		
 		return resp;
+	}
+	
+	/**
+	*
+	* creates PDFA type Document from standard or XFA. 
+	*
+	* @param inputFile
+	* @return
+	* @throws ConversionException
+	* @throws IOException
+	*/
+	
+	private byte[] createPDFADocument(byte[] inputFile, ServiceClientFactory factory) throws ConversionException, IOException {
+		
+		// Create a DocConverterServiceClient object
+		DocConverterServiceClient docConverter = new DocConverterServiceClient(factory);
+		Document inDoc = new Document(inputFile);
+	
+		// Create a PDFAConversionOptionSpec object and set tracking information
+		PDFAConversionOptionSpec spec = new PDFAConversionOptionSpec();
+		
+	    // AEM logging level - suggest turning this off unless issues need debugging on AEM side. 
+		//spec.setLogLevel("INFO");
+		//spec.setLogLevel("FINE");
+	
+		 // Convert the PDF document to a PDF/A document
+		PDFAConversionResult result = docConverter.toPDFA(inDoc, spec);
+	
+		 // Save the PDF/A file
+		Document pdfADoc = result.getPDFADocument();
+		return IOUtils.toByteArray(pdfADoc.getInputStream());
 	}
 	
 }

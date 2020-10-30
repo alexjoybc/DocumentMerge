@@ -3,22 +3,24 @@ package ca.bc.gov.open.pssg.pdfmerge.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * Custom Exception for PDF Merge
  * 
- * @author sivakaruna
+ * Custom exception for Merge Service. 
+ * 
+ * @author shaunmillargov
+ *
  */
-public class PDFMergeException extends Exception {
+public class MergeException extends Exception {
 
 	private static final long serialVersionUID = 5873442413088571528L;
 
 	private final HttpStatus httpStatus;
 
-	public PDFMergeException(String message, HttpStatus status) {
+	public MergeException(String message, HttpStatus status) {
 		super(message);
 		this.httpStatus = status;
 	}
 
-	public PDFMergeException(String message, HttpStatus status, Throwable cause) {
+	public MergeException(String message, HttpStatus status, Throwable cause) {
 		super(message, cause);
 		this.httpStatus = status;
 	}
