@@ -54,7 +54,7 @@ public class MergeServiceImpl implements MergeService {
 		
 		try {
 			
-			logger.info("Calling mergeDocuments...");
+			logger.info("Calling mergePDFDocuments...");
 			
 			// Set AEM connection properties, SOAP mode. 
 			// Properties are fetched from either OpenShift Secrets or if running locally, ENV VARIABLES. 
