@@ -129,6 +129,12 @@
 			<artifactId>adobe-assembler-client</artifactId>
 			<version>11.0.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.adobe.livecycle</groupId>
+			<artifactId>adobe-docconverter-client</artifactId>
+			<version>11.0.0</version>
+		</dependency>
 
 		<!-- Adobe AEM UberJar for AEM, version 6.2.0 -->
 		<dependency>

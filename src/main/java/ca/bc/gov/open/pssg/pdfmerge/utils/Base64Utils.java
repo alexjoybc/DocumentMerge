@@ -19,13 +19,13 @@ public class Base64Utils {
 
 	public static void main(String args[]) throws Exception {
 
-		String sourceFile = "C:\\Users\\176899\\github_projects\\PDFMerge\\test_files\\Test_XFAForm.pdf";
-		String targetFile = "C:\\Users\\176899\\github_projects\\PDFMerge\\test_files\\Test_XFAForm.dat";
-		String decodedFile = "C:\\Users\\176899\\github_projects\\PDFMerge\\test_files\\dummy_2.pdf";
+		//String sourceFile = "C:\\Users\\176899\\github_projects\\PDFMerge\\test_files\\Test_XFAForm.pdf";
+		String targetFile = "C:\\Users\\176899\\github_projects\\PDFMerge\\test_files\\output.dat";
+		String decodedFile = "C:\\Users\\176899\\github_projects\\PDFMerge\\test_files\\output.pdf";
 
-		encode(sourceFile, targetFile, false);
+		//encode(sourceFile, targetFile, false);
 		
-		//decode(targetFile, decodedFile);
+		decode(targetFile, decodedFile);
 		
 	}
 

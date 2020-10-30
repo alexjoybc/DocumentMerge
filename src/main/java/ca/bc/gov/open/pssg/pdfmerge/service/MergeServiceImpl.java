@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.pdfmerge.service;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -22,6 +23,10 @@ import com.adobe.idp.dsc.clientsdk.ServiceClientFactoryProperties;
 import com.adobe.livecycle.assembler.client.AssemblerOptionSpec;
 import com.adobe.livecycle.assembler.client.AssemblerResult;
 import com.adobe.livecycle.assembler.client.AssemblerServiceClient;
+import com.adobe.livecycle.docconverter.client.ConversionException;
+import com.adobe.livecycle.docconverter.client.DocConverterServiceClient;
+import com.adobe.livecycle.docconverter.client.PDFAConversionOptionSpec;
+import com.adobe.livecycle.docconverter.client.PDFAConversionResult;
 
 import ca.bc.gov.open.pssg.pdfmerge.config.ConfigProperties;
 import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
@@ -66,10 +71,10 @@ public class MergeServiceImpl implements MergeService {
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, properties.getAemServicePassword());
 
 			// Create a ServiceClientFactory instance
-			ServiceClientFactory myFactory = ServiceClientFactory.createInstance(connectionProps);
+			ServiceClientFactory sFactory = ServiceClientFactory.createInstance(connectionProps);
 
 			// Create an AssemblerServiceClient object
-			AssemblerServiceClient assemblerClient = new AssemblerServiceClient(myFactory);
+			AssemblerServiceClient assemblerClient = new AssemblerServiceClient(sFactory);
 			
 			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
 			
@@ -88,7 +93,8 @@ public class MergeServiceImpl implements MergeService {
 				if ( request.getOptions().getForcePDFAOnLoad() && PDFBoxUtilities.isPDFXfa(thisDoc)) {
 					logger.info("forcePDFA is on and documet type is XFA. Converting to PDF/A..."); 
 					
-					//TODO - call service to transform to PDF/A
+					//call PDF/A transformation 
+					thisDoc = createPDFADocument(thisDoc, sFactory);
 					
 				}
 				
@@ -154,6 +160,35 @@ public class MergeServiceImpl implements MergeService {
 		}
 		
 		return resp;
+	}
+	
+	/**
+	*
+	* creates PDFA type Document from standard or XFA. 
+	*
+	* @param inputFile
+	* @return
+	* @throws ConversionException
+	* @throws IOException
+	*/
+	
+	private byte[] createPDFADocument(byte[] inputFile, ServiceClientFactory factory) throws ConversionException, IOException {
+		// Create a DocConverterServiceClient object
+		
+		DocConverterServiceClient docConverter = new DocConverterServiceClient(factory);
+		Document inDoc = new Document(inputFile);
+	
+		 // Create a PDFAConversionOptionSpec object and set
+		// tracking information
+		PDFAConversionOptionSpec spec = new PDFAConversionOptionSpec();
+		spec.setLogLevel("FINE");
+	
+		 // Convert the PDF document to a PDF/A document
+		PDFAConversionResult result = docConverter.toPDFA(inDoc, spec);
+	
+		 // Save the PDF/A file
+		Document pdfADoc = result.getPDFADocument();
+		return IOUtils.toByteArray(pdfADoc.getInputStream());
 	}
 	
 }

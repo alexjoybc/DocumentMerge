@@ -44,7 +44,6 @@ public class PDFBoxUtilities {
 			isXFA = (null != xfa) ? true : false;
 		} catch (MergeException | NullPointerException e) {
 			logger.error(e.getMessage());
-			e.printStackTrace();
 		} finally {			
 			try {
 				doc.close();
