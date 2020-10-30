@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.bc.gov.open.pssg.pdfmerge.exception.PDFMergeException;
+import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
 import ca.bc.gov.open.pssg.pdfmerge.model.JSONResponse;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
@@ -53,7 +53,7 @@ public class MergeController {
 			logger.info("Merge process complete.");
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 			
-		} catch (PDFMergeException e) {
+		} catch (MergeException e) {
 			
 			e.printStackTrace();
 			logger.error("PDF Merge encountered an error " + e.getMessage());

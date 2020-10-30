@@ -22,11 +22,12 @@ import com.adobe.livecycle.assembler.client.AssemblerResult;
 import com.adobe.livecycle.assembler.client.AssemblerServiceClient;
 
 import ca.bc.gov.open.pssg.pdfmerge.config.ConfigProperties;
-import ca.bc.gov.open.pssg.pdfmerge.exception.PDFMergeException;
+import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
 import ca.bc.gov.open.pssg.pdfmerge.model.MergeDoc;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
 import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
 import ca.bc.gov.open.pssg.pdfmerge.utils.DDXUtils;
+import ca.bc.gov.open.pssg.pdfmerge.utils.PDFBoxUtilities;
 import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeConstants;
 
 /**
@@ -45,7 +46,7 @@ public class MergeServiceImpl implements MergeService {
 	private ConfigProperties properties;
 
 	@Override
-	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws PDFMergeException {
+	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws MergeException {
 		
 		PDFMergeResponse resp = new PDFMergeResponse();
 		
@@ -70,8 +71,20 @@ public class MergeServiceImpl implements MergeService {
 			
 			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
 			int count = 0; 
+			
+			//TODO - get documents in order of placement. 
 			for (ca.bc.gov.open.pssg.pdfmerge.model.Document doc: request.getDocuments()) {
-				pageList.add( new MergeDoc( Base64Utils.decode(doc.getData().getBytes()) ));
+				
+				byte[] thisDoc = Base64Utils.decode(doc.getData().getBytes()); 
+				
+				if ( request.getOptions().getForcePDFAOnLoad() && PDFBoxUtilities.isPDFXfa(thisDoc)) {
+					logger.info("forcePDFA is on and documet type is XFA. Converting to PDF/A..."); 
+					
+					//TODO - call service to transform to PDF/A
+					
+				}
+				
+				pageList.add( new MergeDoc( thisDoc));
 				logger.debug("Loaded page " + count++);
 			}
 			
@@ -129,7 +142,7 @@ public class MergeServiceImpl implements MergeService {
 			
 			logger.error("Failure at mergeDocuments. Reason: " + e.getMessage());
 			e.printStackTrace();
-			throw new PDFMergeException(e.getMessage(), HttpStatus.NOT_FOUND, e);
+			throw new MergeException(e.getMessage(), HttpStatus.NOT_FOUND, e);
 		}
 		
 		return resp;
