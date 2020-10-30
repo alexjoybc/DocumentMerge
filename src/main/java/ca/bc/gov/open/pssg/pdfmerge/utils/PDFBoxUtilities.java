@@ -38,9 +38,12 @@ public class PDFBoxUtilities {
 		
 		boolean isXFA = false;
 		PDDocument doc = null;
+		PDXFAResource xfa = null;
 		try {
 			doc =  getPDDocFromBytes(pdfFile);
-			PDXFAResource xfa = doc.getDocumentCatalog().getAcroForm().getXFA();
+			if ( null != doc.getDocumentCatalog().getAcroForm()) {
+				xfa = doc.getDocumentCatalog().getAcroForm().getXFA();
+			} 
 			isXFA = (null != xfa) ? true : false;
 		} catch (MergeException | NullPointerException e) {
 			logger.error(e.getMessage());
@@ -97,33 +100,6 @@ public class PDFBoxUtilities {
 			return false;
 		}
 	}
-	
-//	/**
-//	 * isXFA() - determines if smartform or not. 
-//	 * @param doc
-//	 * @return
-//	 */
-//    public static boolean isXFA(byte[] pdfFile) {
-//    	
-//    	log.debug("checking if smartform...");
-//    	
-//    	PDDocument doc =  getPDDocFromBytes(pdfFile);
-//    	
-//    	boolean isXFA = false; 
-//		try {
-//			PDXFAResource xfa = doc.getDocumentCatalog().getAcroForm().getXFA();
-//			isXFA = (null != xfa) ? true : false; 
-//		} catch (Exception ex) {
-//			isXFA = false;
-//		} finally {
-//			try {
-//				doc.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return isXFA; 
-//	}
   
 	public static int getNumPages(byte[] pdfFile) throws MergeException {
 		int pages = getPDDocFromBytes(pdfFile).getNumberOfPages();

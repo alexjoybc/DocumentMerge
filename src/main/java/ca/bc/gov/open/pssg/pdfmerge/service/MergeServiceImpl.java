@@ -91,20 +91,19 @@ public class MergeServiceImpl implements MergeService {
 				byte[] thisDoc = Base64Utils.decode(doc.getData().getBytes()); 
 				
 				if ( request.getOptions().getForcePDFAOnLoad() && PDFBoxUtilities.isPDFXfa(thisDoc)) {
-					logger.info("forcePDFA is on and documet type is XFA. Converting to PDF/A..."); 
+					logger.info("forcePDFA is on and document, index " + doc.getPlacement() + ", is XFA. Converting to PDF/A..."); 
 					
 					//call PDF/A transformation 
 					thisDoc = createPDFADocument(thisDoc, sFactory);
-					
 				}
 				
 				pageList.add( new MergeDoc( thisDoc));
-				logger.debug("Loaded page " + doc.getPlacement());
+				logger.info("Loaded page " + doc.getPlacement());
 			}
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 
 			org.w3c.dom.Document aDDx = DDXUtils.createMergeDDX(pageList);
-			logger.debug(DDXUtils.DDXDocumentToString(aDDx));
+			logger.info(DDXUtils.DDXDocumentToString(aDDx));
 			Document myDDX = DDXUtils.convertDDX(aDDx);
 			
 			// Create a Map object to store the PDF source documents
@@ -173,15 +172,17 @@ public class MergeServiceImpl implements MergeService {
 	*/
 	
 	private byte[] createPDFADocument(byte[] inputFile, ServiceClientFactory factory) throws ConversionException, IOException {
-		// Create a DocConverterServiceClient object
 		
+		// Create a DocConverterServiceClient object
 		DocConverterServiceClient docConverter = new DocConverterServiceClient(factory);
 		Document inDoc = new Document(inputFile);
 	
-		 // Create a PDFAConversionOptionSpec object and set
-		// tracking information
+		// Create a PDFAConversionOptionSpec object and set tracking information
 		PDFAConversionOptionSpec spec = new PDFAConversionOptionSpec();
-		spec.setLogLevel("FINE");
+		
+	    // AEM logging level - suggest turning this off unless issues need debugging on AEM side. 
+		//spec.setLogLevel("INFO");
+		//spec.setLogLevel("FINE");
 	
 		 // Convert the PDF document to a PDF/A document
 		PDFAConversionResult result = docConverter.toPDFA(inDoc, spec);
