@@ -81,7 +81,7 @@ public class MergeServiceImpl implements MergeService {
 			// Sort the document based on placement id in the event they are mixed. lowest to highest 
 			Collections.sort(request.getDocuments(), new Comparator<ca.bc.gov.open.pssg.pdfmerge.model.Document>() {
 			    public int compare(ca.bc.gov.open.pssg.pdfmerge.model.Document d1, ca.bc.gov.open.pssg.pdfmerge.model.Document d2) {
-			        return d1.getPlacement().compareTo(d2.getPlacement());
+			        return d1.getOrder().compareTo(d2.getOrder());
 			    }
 			});
 			
@@ -91,14 +91,14 @@ public class MergeServiceImpl implements MergeService {
 				byte[] thisDoc = Base64Utils.decode(doc.getData().getBytes()); 
 				
 				if ( request.getOptions().getForcePDFAOnLoad() && PDFBoxUtilities.isPDFXfa(thisDoc)) {
-					logger.info("forcePDFA is on and document, index " + doc.getPlacement() + ", is XFA. Converting to PDF/A..."); 
+					logger.info("forcePDFA is on and document, order " + doc.getOrder() + ", is XFA. Converting to PDF/A..."); 
 					
 					//call PDF/A transformation 
 					thisDoc = createPDFADocument(thisDoc, sFactory);
 				}
 				
 				pageList.add( new MergeDoc( thisDoc));
-				logger.info("Loaded page " + doc.getPlacement());
+				logger.info("Loaded page " + doc.getOrder());
 			}
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 

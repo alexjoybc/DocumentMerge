@@ -5,14 +5,14 @@
    "documents":[
       {
          "id":"optional",
-         "mediaType":"pdf",
-         "placement":1,
+         "docType":"pdf",
+         "order":1,
          "data":"SGVsbG9Xb3JsZA=="
       },
       {
          "id":"optional",
-         "mediaType":"pdf",
-         "placement":2,
+         "docType":"pdf",
+         "order":2,
          "data":"SGVsbG9Xb3JsZA=="
       }
    ]

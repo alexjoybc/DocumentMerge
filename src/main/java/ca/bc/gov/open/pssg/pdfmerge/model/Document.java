@@ -10,10 +10,10 @@ public class Document {
 
 	@JsonProperty("id")
 	private String id;
-	@JsonProperty("mediaType")
-	private String mediaType;
-	@JsonProperty("placement")
-	private Integer placement;
+	@JsonProperty("docType")
+	private String docType;
+	@JsonProperty("order")
+	private Integer order;
 	@JsonProperty("data")
 	private String data;
 
@@ -27,24 +27,24 @@ public class Document {
 		this.id = id;
 	}
 
-	@JsonProperty("mediaType")
-	public String getMediaType() {
-		return mediaType;
+	@JsonProperty("docType")
+	public String getDocType() {
+		return docType;
 	}
 
-	@JsonProperty("mediaType")
-	public void setMediaType(String mediaType) {
-		this.mediaType = mediaType;
+	@JsonProperty("docType")
+	public void setDocType(String docType) {
+		this.docType = docType;
 	}
 
-	@JsonProperty("placement")
-	public Integer getPlacement() {
-		return placement;
+	@JsonProperty("order")
+	public Integer getOrder() {
+		return order;
 	}
 
-	@JsonProperty("placement")
-	public void setPlacement(Integer placement) {
-		this.placement = placement;
+	@JsonProperty("order")
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 
 	@JsonProperty("data")
