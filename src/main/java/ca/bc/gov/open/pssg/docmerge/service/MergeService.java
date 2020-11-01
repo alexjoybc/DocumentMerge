@@ -1,8 +1,8 @@
 package ca.bc.gov.open.pssg.docmerge.service;
 
 import ca.bc.gov.open.pssg.docmerge.exception.MergeException;
-import ca.bc.gov.open.pssg.docmerge.model.PDFMergeRequest;
-import ca.bc.gov.open.pssg.docmerge.model.PDFMergeResponse;
+import ca.bc.gov.open.pssg.docmerge.model.DocMergeRequest;
+import ca.bc.gov.open.pssg.docmerge.model.DocMergeResponse;
 
 /**
  * 
@@ -13,7 +13,7 @@ import ca.bc.gov.open.pssg.docmerge.model.PDFMergeResponse;
  */
 public interface MergeService {
 
-	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws MergeException; 
+	public DocMergeResponse mergePDFDocuments(DocMergeRequest request, String correlationId) throws MergeException; 
 	
 }
 

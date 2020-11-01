@@ -31,8 +31,8 @@ import com.adobe.livecycle.docconverter.client.PDFAConversionResult;
 import ca.bc.gov.open.pssg.docmerge.config.ConfigProperties;
 import ca.bc.gov.open.pssg.docmerge.exception.MergeException;
 import ca.bc.gov.open.pssg.docmerge.model.MergeDoc;
-import ca.bc.gov.open.pssg.docmerge.model.PDFMergeRequest;
-import ca.bc.gov.open.pssg.docmerge.model.PDFMergeResponse;
+import ca.bc.gov.open.pssg.docmerge.model.DocMergeRequest;
+import ca.bc.gov.open.pssg.docmerge.model.DocMergeResponse;
 import ca.bc.gov.open.pssg.docmerge.utils.DDXUtils;
 import ca.bc.gov.open.pssg.docmerge.utils.PDFBoxUtilities;
 import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeConstants;
@@ -53,9 +53,9 @@ public class MergeServiceImpl implements MergeService {
 	private ConfigProperties properties;
 
 	@Override
-	public PDFMergeResponse mergePDFDocuments(PDFMergeRequest request, String correlationId) throws MergeException {
+	public DocMergeResponse mergePDFDocuments(DocMergeRequest request, String correlationId) throws MergeException {
 		
-		PDFMergeResponse resp = new PDFMergeResponse();
+		DocMergeResponse resp = new DocMergeResponse();
 		
 		try {
 			

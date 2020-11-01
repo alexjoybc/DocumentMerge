@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.docmerge.exception.MergeException;
 import ca.bc.gov.open.pssg.docmerge.model.JSONResponse;
-import ca.bc.gov.open.pssg.docmerge.model.PDFMergeRequest;
-import ca.bc.gov.open.pssg.docmerge.model.PDFMergeResponse;
+import ca.bc.gov.open.pssg.docmerge.model.DocMergeRequest;
+import ca.bc.gov.open.pssg.docmerge.model.DocMergeResponse;
 import ca.bc.gov.open.pssg.docmerge.service.MergeService;
 import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeConstants;
 import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeUtils;
@@ -40,16 +40,16 @@ public class MergeController {
 	@PostMapping(value = {"/merge/{correlationId}" }, 
 			consumes = PDFMergeConstants.JSON_CONTENT, 
 			produces = PDFMergeConstants.JSON_CONTENT)
-	public ResponseEntity<JSONResponse<PDFMergeResponse>> mergeDocumentPost(
+	public ResponseEntity<JSONResponse<DocMergeResponse>> mergeDocumentPost(
 			@PathVariable(value = "correlationId", required = true) String correlationId, 
-			@Valid @RequestBody(required = true)  PDFMergeRequest request)  {
+			@Valid @RequestBody(required = true)  DocMergeRequest request)  {
 		
 		logger.info("Starting merge process...");
 		
 		try {
 			
-			PDFMergeResponse mergResp = mergeService.mergePDFDocuments(request, correlationId);
-			JSONResponse<PDFMergeResponse> resp = new JSONResponse<>(mergResp);
+			DocMergeResponse mergResp = mergeService.mergePDFDocuments(request, correlationId);
+			JSONResponse<DocMergeResponse> resp = new JSONResponse<>(mergResp);
 			logger.info("Merge process complete.");
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 			

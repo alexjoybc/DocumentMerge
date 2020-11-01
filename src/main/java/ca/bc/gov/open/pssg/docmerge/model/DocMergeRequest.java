@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "options", "documents" })
-public class PDFMergeRequest {
+public class DocMergeRequest {
 
 	@JsonProperty("options")
 	private Options options;

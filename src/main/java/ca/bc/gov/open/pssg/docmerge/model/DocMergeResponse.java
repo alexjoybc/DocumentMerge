@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "document", "mimeType" })
-public class PDFMergeResponse {
+public class DocMergeResponse {
 
 	@JsonProperty("document")
 	private String document;
