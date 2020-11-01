@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.model;
+package ca.bc.gov.open.pssg.docmerge.model;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.swagger2;
+package ca.bc.gov.open.pssg.docmerge.swagger2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.google.common.base.Predicates;
 
-import ca.bc.gov.open.pssg.pdfmerge.config.ConfigProperties;
+import ca.bc.gov.open.pssg.docmerge.config.ConfigProperties;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;

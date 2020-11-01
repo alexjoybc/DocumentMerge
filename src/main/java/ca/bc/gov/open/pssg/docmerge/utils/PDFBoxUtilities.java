@@ -3,7 +3,7 @@
  * Copyright (c) 2012, B.C. Ministry of Attorney General.
  * All rights reserved.
  */
-package ca.bc.gov.open.pssg.pdfmerge.utils;
+package ca.bc.gov.open.pssg.docmerge.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
-import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
+import ca.bc.gov.open.pssg.docmerge.exception.MergeException;
 
 /**
  * 

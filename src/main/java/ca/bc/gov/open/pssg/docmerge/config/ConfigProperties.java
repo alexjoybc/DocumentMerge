@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.config;
+package ca.bc.gov.open.pssg.docmerge.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

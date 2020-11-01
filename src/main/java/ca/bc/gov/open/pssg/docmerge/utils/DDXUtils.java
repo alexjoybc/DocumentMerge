@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.utils;
+package ca.bc.gov.open.pssg.docmerge.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
@@ -7,15 +7,18 @@ import java.util.LinkedList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import ca.bc.gov.open.pssg.pdfmerge.model.MergeDoc;
+import ca.bc.gov.open.pssg.docmerge.model.MergeDoc;
 
 
 
@@ -27,12 +30,15 @@ import ca.bc.gov.open.pssg.pdfmerge.model.MergeDoc;
  */
 public class DDXUtils {
 
+	private final static Logger logger = LoggerFactory.getLogger(DDXUtils.class);
+	
 	/**
 	 * Creates a Merge DDX document for Assembler using an org.w3c.dom.Document object
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public static Document createMergeDDX(LinkedList<MergeDoc> pageList) {
+	public static Document createMergeDDX(LinkedList<MergeDoc> pageList) throws Exception {
 
 		Document document = null;
 		try {
@@ -62,7 +68,9 @@ public class DDXUtils {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("The following exception occurred when creating the merge DDX file: " + e.getMessage());
+			e.printStackTrace();
+			logger.error("Error at DDxUtils.createMergeDDX: " + e.getMessage());
+			throw e;
 		}
 
 		return document;
@@ -74,8 +82,9 @@ public class DDXUtils {
 	 * 
 	 * @param ddx
 	 * @return
+	 * @throws Exception 
 	 */
-	public static com.adobe.idp.Document convertDDX(Document ddx) {
+	public static com.adobe.idp.Document convertDDX(Document ddx) throws Exception {
 		
 		byte[] mybytes = null;
 		
@@ -106,7 +115,9 @@ public class DDXUtils {
 			mybytes = myOutStream.toByteArray();
 			
 		} catch (Exception e) {
-			System.out.println("The following exception occurred: " + e.getMessage());
+			e.printStackTrace();
+			logger.error("Error at DDxUtils.convertDDX: " + e.getMessage());
+			throw e;
 		}
 		
 		// Create a com.adobe.idp.Document object and copy the
@@ -122,15 +133,24 @@ public class DDXUtils {
 	 * @return
 	 * @throws TransformerException
 	 */
-	public static String DDXDocumentToString(Document ddx) throws TransformerException {
-		
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        DOMSource source = new DOMSource(ddx);
-        StreamResult result = new StreamResult(new StringWriter());
-        transformer.transform(source, result);
+	public static String DDXDocumentToString(Document ddx) throws Exception {
 
-        return result.getWriter().toString();
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer;
+
+		try {
+
+			transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(ddx);
+			StreamResult result = new StreamResult(new StringWriter());
+			transformer.transform(source, result);
+			return result.getWriter().toString();
+
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+			logger.error("Error at DDxUtils.DDXDocumentToString: " + e.getMessage());
+			throw e;
+		}
 	}
 	
 }

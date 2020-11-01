@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.controller;
+package ca.bc.gov.open.pssg.docmerge.controller;
 
 import javax.validation.Valid;
 
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
-import ca.bc.gov.open.pssg.pdfmerge.model.JSONResponse;
-import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
-import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
-import ca.bc.gov.open.pssg.pdfmerge.service.MergeService;
-import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeConstants;
-import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeUtils;
+import ca.bc.gov.open.pssg.docmerge.exception.MergeException;
+import ca.bc.gov.open.pssg.docmerge.model.JSONResponse;
+import ca.bc.gov.open.pssg.docmerge.model.PDFMergeRequest;
+import ca.bc.gov.open.pssg.docmerge.model.PDFMergeResponse;
+import ca.bc.gov.open.pssg.docmerge.service.MergeService;
+import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeConstants;
+import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +56,7 @@ public class MergeController {
 		} catch (MergeException e) {
 			
 			e.printStackTrace();
-			logger.error("PDF Merge encountered an error " + e.getMessage());
+			logger.error("Document Merge encountered an error " + e.getMessage());
 			return new ResponseEntity<>(
 					PDFMergeUtils.buildErrorResponse(String.format(PDFMergeConstants.NOT_PROCESSED_ERROR, correlationId), 404),
 					HttpStatus.NOT_FOUND);

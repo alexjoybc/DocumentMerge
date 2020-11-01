@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge;
+package ca.bc.gov.open.pssg.docmerge;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

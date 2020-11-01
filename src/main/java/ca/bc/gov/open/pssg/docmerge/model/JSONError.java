@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.model;
+package ca.bc.gov.open.pssg.docmerge.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

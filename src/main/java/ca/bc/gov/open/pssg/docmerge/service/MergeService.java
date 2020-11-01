@@ -1,8 +1,8 @@
-package ca.bc.gov.open.pssg.pdfmerge.service;
+package ca.bc.gov.open.pssg.docmerge.service;
 
-import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
-import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
-import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
+import ca.bc.gov.open.pssg.docmerge.exception.MergeException;
+import ca.bc.gov.open.pssg.docmerge.model.PDFMergeRequest;
+import ca.bc.gov.open.pssg.docmerge.model.PDFMergeResponse;
 
 /**
  * 

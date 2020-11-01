@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.exception;
+package ca.bc.gov.open.pssg.docmerge.exception;
 
 import org.springframework.http.HttpStatus;
 

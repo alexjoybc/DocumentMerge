@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.service;
+package ca.bc.gov.open.pssg.docmerge.service;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -28,14 +28,14 @@ import com.adobe.livecycle.docconverter.client.DocConverterServiceClient;
 import com.adobe.livecycle.docconverter.client.PDFAConversionOptionSpec;
 import com.adobe.livecycle.docconverter.client.PDFAConversionResult;
 
-import ca.bc.gov.open.pssg.pdfmerge.config.ConfigProperties;
-import ca.bc.gov.open.pssg.pdfmerge.exception.MergeException;
-import ca.bc.gov.open.pssg.pdfmerge.model.MergeDoc;
-import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeRequest;
-import ca.bc.gov.open.pssg.pdfmerge.model.PDFMergeResponse;
-import ca.bc.gov.open.pssg.pdfmerge.utils.DDXUtils;
-import ca.bc.gov.open.pssg.pdfmerge.utils.PDFBoxUtilities;
-import ca.bc.gov.open.pssg.pdfmerge.utils.PDFMergeConstants;
+import ca.bc.gov.open.pssg.docmerge.config.ConfigProperties;
+import ca.bc.gov.open.pssg.docmerge.exception.MergeException;
+import ca.bc.gov.open.pssg.docmerge.model.MergeDoc;
+import ca.bc.gov.open.pssg.docmerge.model.PDFMergeRequest;
+import ca.bc.gov.open.pssg.docmerge.model.PDFMergeResponse;
+import ca.bc.gov.open.pssg.docmerge.utils.DDXUtils;
+import ca.bc.gov.open.pssg.docmerge.utils.PDFBoxUtilities;
+import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeConstants;
 
 /**
  * 
@@ -79,14 +79,14 @@ public class MergeServiceImpl implements MergeService {
 			LinkedList<MergeDoc> pageList=new LinkedList<MergeDoc>();
 			
 			// Sort the document based on placement id in the event they are mixed. lowest to highest 
-			Collections.sort(request.getDocuments(), new Comparator<ca.bc.gov.open.pssg.pdfmerge.model.Document>() {
-			    public int compare(ca.bc.gov.open.pssg.pdfmerge.model.Document d1, ca.bc.gov.open.pssg.pdfmerge.model.Document d2) {
+			Collections.sort(request.getDocuments(), new Comparator<ca.bc.gov.open.pssg.docmerge.model.Document>() {
+			    public int compare(ca.bc.gov.open.pssg.docmerge.model.Document d1, ca.bc.gov.open.pssg.docmerge.model.Document d2) {
 			        return d1.getOrder().compareTo(d2.getOrder());
 			    }
 			});
 			
 			// For each document, check if XFA and convert to PDF/A if requested via option. 
-			for (ca.bc.gov.open.pssg.pdfmerge.model.Document doc: request.getDocuments()) {
+			for (ca.bc.gov.open.pssg.docmerge.model.Document doc: request.getDocuments()) {
 				
 				byte[] thisDoc = Base64Utils.decode(doc.getData().getBytes()); 
 				
@@ -103,7 +103,7 @@ public class MergeServiceImpl implements MergeService {
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 
 			org.w3c.dom.Document aDDx = DDXUtils.createMergeDDX(pageList);
-			logger.info(DDXUtils.DDXDocumentToString(aDDx));
+			logger.info("Dynamically generated DDX : " + DDXUtils.DDXDocumentToString(aDDx));
 			Document myDDX = DDXUtils.convertDDX(aDDx);
 			
 			// Create a Map object to store the PDF source documents
@@ -146,8 +146,6 @@ public class MergeServiceImpl implements MergeService {
 					resp.setDocument( Base64Utils.encodeToString( IOUtils.toByteArray(outDoc.getInputStream())));					
 				}
 			}
-			
-			logger.info("mergeDocuments completed successfully...");
 			
 			resp.setMimeType(PDFMergeConstants.PDF_MIME_TYPE);
 			

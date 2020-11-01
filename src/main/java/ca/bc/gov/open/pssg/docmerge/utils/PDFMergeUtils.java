@@ -1,7 +1,7 @@
-package ca.bc.gov.open.pssg.pdfmerge.utils;
+package ca.bc.gov.open.pssg.docmerge.utils;
 
-import ca.bc.gov.open.pssg.pdfmerge.model.JSONError;
-import ca.bc.gov.open.pssg.pdfmerge.model.JSONResponse;
+import ca.bc.gov.open.pssg.docmerge.model.JSONError;
+import ca.bc.gov.open.pssg.docmerge.model.JSONResponse;
 
 /**
  * 

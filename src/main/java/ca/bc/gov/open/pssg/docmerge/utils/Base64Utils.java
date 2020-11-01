@@ -1,4 +1,4 @@
-package ca.bc.gov.open.pssg.pdfmerge.utils;
+package ca.bc.gov.open.pssg.docmerge.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
