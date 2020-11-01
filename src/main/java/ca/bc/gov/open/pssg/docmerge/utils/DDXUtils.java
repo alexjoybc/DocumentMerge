@@ -25,7 +25,7 @@ import ca.bc.gov.open.pssg.docmerge.model.MergeDoc;
 /**
  * A set of DDX utils. 
  * 
- * @author 176899
+ * @author shaunmillargov
  *
  */
 public class DDXUtils {
@@ -51,19 +51,19 @@ public class DDXUtils {
 			document = builder.newDocument();
 			
 			// Create the root element and append it to the XML DOM
-			Element root = (Element) document.createElement(PDFMergeConstants.DDX_ELEMENT_DDX);
-			root.setAttribute(PDFMergeConstants.DDX_NAMESPACE_ATTRIBUTE, PDFMergeConstants.DDX_NAMESPACE);
+			Element root = (Element) document.createElement(DocMergeConstants.DDX_ELEMENT_DDX);
+			root.setAttribute(DocMergeConstants.DDX_NAMESPACE_ATTRIBUTE, DocMergeConstants.DDX_NAMESPACE);
 			document.appendChild(root);
 			
 			// Create the output element
-			Element PDFs = (Element) document.createElement(PDFMergeConstants.DDX_ELEMENT_PDF);
-			PDFs.setAttribute(PDFMergeConstants.DDX_OUTPUT_ATTRIBUTE, PDFMergeConstants.DDX_OUTPUT_NAME);
+			Element PDFs = (Element) document.createElement(DocMergeConstants.DDX_ELEMENT_PDF);
+			PDFs.setAttribute(DocMergeConstants.DDX_OUTPUT_ATTRIBUTE, DocMergeConstants.DDX_OUTPUT_NAME);
 			root.appendChild(PDFs);
 			
 			// Add each pageId element to the DDX
 			for (int i = 0; i < pageList.size(); i++) {
-				Element PDF = (Element) document.createElement(PDFMergeConstants.DDX_ELEMENT_PDF);
-				PDF.setAttribute(PDFMergeConstants.DDX_SOURCE_ATTRIBUTE, pageList.get(i).getId());
+				Element PDF = (Element) document.createElement(DocMergeConstants.DDX_ELEMENT_PDF);
+				PDF.setAttribute(DocMergeConstants.DDX_SOURCE_ATTRIBUTE, pageList.get(i).getId());
 				PDFs.appendChild(PDF);
 			}
 			

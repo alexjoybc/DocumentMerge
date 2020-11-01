@@ -8,11 +8,9 @@ package ca.bc.gov.open.pssg.docmerge.utils;
  * @author shaunmillargov
  *
  */
-public final class PDFMergeConstants {
+public final class DocMergeConstants {
 	
-	private PDFMergeConstants() {
-	      //not called
-	}
+	private DocMergeConstants() {}
     
     public static final String JSON_RESPONSE_SUCCESS = "success";
     public static final String JSON_RESPONSE_FAIL = "fail";

@@ -15,8 +15,8 @@ import ca.bc.gov.open.pssg.docmerge.model.JSONResponse;
 import ca.bc.gov.open.pssg.docmerge.model.DocMergeRequest;
 import ca.bc.gov.open.pssg.docmerge.model.DocMergeResponse;
 import ca.bc.gov.open.pssg.docmerge.service.MergeService;
-import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeConstants;
-import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeUtils;
+import ca.bc.gov.open.pssg.docmerge.utils.DocMergeConstants;
+import ca.bc.gov.open.pssg.docmerge.utils.DocMergeUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +38,8 @@ public class MergeController {
 	private final Logger logger = LoggerFactory.getLogger(MergeController.class);
 
 	@PostMapping(value = {"/merge/{correlationId}" }, 
-			consumes = PDFMergeConstants.JSON_CONTENT, 
-			produces = PDFMergeConstants.JSON_CONTENT)
+			consumes = DocMergeConstants.JSON_CONTENT, 
+			produces = DocMergeConstants.JSON_CONTENT)
 	public ResponseEntity<JSONResponse<DocMergeResponse>> mergeDocumentPost(
 			@PathVariable(value = "correlationId", required = true) String correlationId, 
 			@Valid @RequestBody(required = true)  DocMergeRequest request)  {
@@ -58,7 +58,7 @@ public class MergeController {
 			e.printStackTrace();
 			logger.error("Document Merge encountered an error " + e.getMessage());
 			return new ResponseEntity<>(
-					PDFMergeUtils.buildErrorResponse(String.format(PDFMergeConstants.NOT_PROCESSED_ERROR, correlationId), 404),
+					DocMergeUtils.buildErrorResponse(String.format(DocMergeConstants.NOT_PROCESSED_ERROR, correlationId), 404),
 					HttpStatus.NOT_FOUND);
 		}
 	}

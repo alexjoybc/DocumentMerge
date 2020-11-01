@@ -35,7 +35,7 @@ import ca.bc.gov.open.pssg.docmerge.model.DocMergeRequest;
 import ca.bc.gov.open.pssg.docmerge.model.DocMergeResponse;
 import ca.bc.gov.open.pssg.docmerge.utils.DDXUtils;
 import ca.bc.gov.open.pssg.docmerge.utils.PDFBoxUtilities;
-import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeConstants;
+import ca.bc.gov.open.pssg.docmerge.utils.DocMergeConstants;
 
 /**
  * 
@@ -66,7 +66,7 @@ public class MergeServiceImpl implements MergeService {
 			Properties connectionProps = new Properties();
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_DEFAULT_SOAP_ENDPOINT, properties.getAemEndpoint());
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_TRANSPORT_PROTOCOL, ServiceClientFactoryProperties.DSC_SOAP_PROTOCOL);
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_SERVER_TYPE, PDFMergeConstants.DSC_SERVER_TYPE_JBOSS);
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_SERVER_TYPE, DocMergeConstants.DSC_SERVER_TYPE_JBOSS);
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_USERNAME, properties.getAemUser());
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, properties.getAemPassword());
 
@@ -134,7 +134,7 @@ public class MergeServiceImpl implements MergeService {
 
 				// Get the key name as specified in the DDX document
 				String keyName = (String) e.getKey();
-				if (keyName.equalsIgnoreCase(PDFMergeConstants.DDX_OUTPUT_NAME)) {
+				if (keyName.equalsIgnoreCase(DocMergeConstants.DDX_OUTPUT_NAME)) {
 					
 					Object o = e.getValue();
 					outDoc = (Document) o;
@@ -147,7 +147,7 @@ public class MergeServiceImpl implements MergeService {
 				}
 			}
 			
-			resp.setMimeType(PDFMergeConstants.PDF_MIME_TYPE);
+			resp.setMimeType(DocMergeConstants.PDF_MIME_TYPE);
 			
 		} catch (Exception e) {
 			
@@ -161,7 +161,7 @@ public class MergeServiceImpl implements MergeService {
 	
 	/**
 	*
-	* creates PDFA type Document from standard or XFA. 
+	* Transforms PDF (XFA or otherwise) to PDF/A type (most basic). 
 	*
 	* @param inputFile
 	* @return

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ca.bc.gov.open.pssg.docmerge.utils.PDFMergeConstants;
+import ca.bc.gov.open.pssg.docmerge.utils.DocMergeConstants;
 
 
 /**
@@ -25,7 +25,7 @@ public class JSONResponse<T> {
 	private T data; 
 
 	@JsonProperty("resp")
-	private String resp = PDFMergeConstants.JSON_RESPONSE_SUCCESS; 
+	private String resp = DocMergeConstants.JSON_RESPONSE_SUCCESS; 
 	
 	@JsonProperty("error")
 	private JSONError error;
@@ -61,7 +61,7 @@ public class JSONResponse<T> {
 
 	@JsonProperty("error")
 	public void setError(JSONError error) {
-		this.resp = PDFMergeConstants.JSON_RESPONSE_FAIL; 
+		this.resp = DocMergeConstants.JSON_RESPONSE_FAIL; 
 		this.error = error;
 	}
 

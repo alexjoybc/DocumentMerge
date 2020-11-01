@@ -8,17 +8,17 @@ import ca.bc.gov.open.pssg.docmerge.model.JSONResponse;
  * @author shaunmillargov
  *
  */
-public class PDFMergeUtils {
+public class DocMergeUtils {
 
 	
 
-	private  PDFMergeUtils() {
+	private  DocMergeUtils() {
 		throw new IllegalStateException("Utility class");
 	}
 
 	public static <T> JSONResponse<T> buildErrorResponse(String errorMessage, int statusCode) {
 		JSONResponse<T> errorResp = new JSONResponse<>();
-		errorResp.setResp(PDFMergeConstants.JSON_RESPONSE_FAIL);
+		errorResp.setResp(DocMergeConstants.JSON_RESPONSE_FAIL);
 		JSONError error = new JSONError(errorMessage, statusCode);
 		errorResp.setError(error);
 		return errorResp;
