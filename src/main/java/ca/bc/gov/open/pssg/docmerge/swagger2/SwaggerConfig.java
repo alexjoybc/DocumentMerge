@@ -55,7 +55,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(getApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("ca.bc.gov.open.pssg.pdfmerge"))
+                .apis(RequestHandlerSelectors.basePackage("ca.bc.gov.open.pssg.docmerge"))
                 .paths(Predicates.not(PathSelectors.regex("/\\*\\*/.*/\\*\\*"))) // Ignore default path mappings
                 .build();
     }
