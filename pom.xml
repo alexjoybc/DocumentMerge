@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
-	<artifactId>PDFMergeService</artifactId>
+	<artifactId>DocumentMergeService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>PDFMergeService</name>
-	<description>a RESTful PDF Merging Service </description>
+	<name>DocumentMergeService</name>
+	<description>A RESTful Document Merging Service</description>
 
 	<properties>
 		<java.version>1.8</java.version>
