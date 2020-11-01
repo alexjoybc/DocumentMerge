@@ -9,14 +9,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author shaunmillargov
  *
  */
-@ConfigurationProperties(prefix = "pdfmerge")
+@ConfigurationProperties(prefix = "docmerge")
 public class ConfigProperties {
 
 	private String serviceApiVersion; 
 	private boolean serviceSwaggerEnabled;
-	private String aemServiceEndpoint; 
-	private String aemServiceUser;
-	private String aemServicePassword;
+	private String aemEndpoint; 
+	private String aemUser;
+	private String aemPassword;
 	
 	public String getServiceApiVersion() {
 		return serviceApiVersion;
@@ -34,28 +34,28 @@ public class ConfigProperties {
 		this.serviceSwaggerEnabled = serviceSwaggerEnabled;
 	}
 
-	public String getAemServiceEndpoint() {
-		return aemServiceEndpoint;
+	public String getAemEndpoint() {
+		return aemEndpoint;
 	}
 
-	public void setAemServiceEndpoint(String aemServiceEndpoint) {
-		this.aemServiceEndpoint = aemServiceEndpoint;
+	public void setAemEndpoint(String aemEndpoint) {
+		this.aemEndpoint = aemEndpoint;
 	}
 
-	public String getAemServiceUser() {
-		return aemServiceUser;
+	public String getAemUser() {
+		return aemUser;
 	}
 
-	public void setAemServiceUser(String aemServiceUser) {
-		this.aemServiceUser = aemServiceUser;
+	public void setAemUser(String aemUser) {
+		this.aemUser = aemUser;
 	}
 
-	public String getAemServicePassword() {
-		return aemServicePassword;
+	public String getAemPassword() {
+		return aemPassword;
 	}
 
-	public void setAemServicePassword(String aemServicePassword) {
-		this.aemServicePassword = aemServicePassword;
+	public void setAemPassword(String aemPassword) {
+		this.aemPassword = aemPassword;
 	}
 	
 }

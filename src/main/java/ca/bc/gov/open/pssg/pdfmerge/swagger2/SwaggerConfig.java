@@ -30,7 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@ConditionalOnProperty(prefix = "pdfmerge",  name = "service-swagger-enabled")
+@ConditionalOnProperty(prefix = "docmerge",  name = "service-swagger-enabled")
 @EnableConfigurationProperties(ConfigProperties.class)
 public class SwaggerConfig implements WebMvcConfigurer {
 	
@@ -63,8 +63,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private ApiInfo getApiInfo() {
 
         return new ApiInfoBuilder()
-                .title("PDFMerge RESTful Service")
-                .description("PDFMerge API")
+                .title("Document Merge RESTful Service")
+                .description("Document Merge API")
                 .version(properties.getServiceApiVersion())
                 .build();
     }

@@ -64,11 +64,11 @@ public class MergeServiceImpl implements MergeService {
 			// Set AEM connection properties, SOAP mode. 
 			// Properties are fetched from either OpenShift Secrets or if running locally, ENV VARIABLES. 
 			Properties connectionProps = new Properties();
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_DEFAULT_SOAP_ENDPOINT, properties.getAemServiceEndpoint());
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_DEFAULT_SOAP_ENDPOINT, properties.getAemEndpoint());
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_TRANSPORT_PROTOCOL, ServiceClientFactoryProperties.DSC_SOAP_PROTOCOL);
 			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_SERVER_TYPE, PDFMergeConstants.DSC_SERVER_TYPE_JBOSS);
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_USERNAME, properties.getAemServiceUser());
-			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, properties.getAemServicePassword());
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_USERNAME, properties.getAemUser());
+			connectionProps.setProperty(ServiceClientFactoryProperties.DSC_CREDENTIAL_PASSWORD, properties.getAemPassword());
 
 			// Create a ServiceClientFactory instance
 			ServiceClientFactory sFactory = ServiceClientFactory.createInstance(connectionProps);
