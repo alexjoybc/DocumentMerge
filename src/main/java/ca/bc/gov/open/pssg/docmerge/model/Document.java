@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "id", "mediaType", "placement", "data" })
+@JsonPropertyOrder({ "id", "docType", "order", "data" })
 public class Document {
 
 	@JsonProperty("id")
