@@ -102,7 +102,7 @@ public class MergeServiceImpl implements MergeService {
 			}
 			
 			// Use DDXUtils to Dynamically generate the DDX file sent to AEM. 
-			org.w3c.dom.Document aDDx = DDXUtils.createMergeDDX(pageList);
+			org.w3c.dom.Document aDDx = DDXUtils.createMergeDDX(pageList, request.getOptions().getCreateToC());
 			logger.info("Dynamically generated DDX : " + DDXUtils.DDXDocumentToString(aDDx));
 			Document myDDX = DDXUtils.convertDDX(aDDx);
 			

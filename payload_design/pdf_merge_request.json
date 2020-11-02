@@ -1,6 +1,7 @@
 {
    "options":{
-      "forcePDFAOnLoad": true
+      "forcePDFAOnLoad": true,
+      "createToC": true
    },
    "documents":[
       {

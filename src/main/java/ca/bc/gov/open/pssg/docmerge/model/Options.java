@@ -12,11 +12,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "forcePDFAOnLoad" })
+@JsonPropertyOrder({ "forcePDFAOnLoad", "createToC" })
 public class Options {
 	
 	@JsonProperty("forcePDFAOnLoad")
 	private Boolean forcePDFAOnLoad;
+	
+	@JsonProperty("createToC")
+	private Boolean createToC;
 
 	@JsonProperty("forcePDFAOnLoad")
 	public Boolean getForcePDFAOnLoad() {
@@ -27,5 +30,17 @@ public class Options {
 	public void setForcePDFAOnLoad(Boolean forcePDFAOnLoad) {
 		this.forcePDFAOnLoad = forcePDFAOnLoad;
 	}
+
+	@JsonProperty("createToC")
+	public Boolean getCreateToC() {
+		return createToC;
+	}
+
+	@JsonProperty("createToC")
+	public void setCreateToC(Boolean createToC) {
+		this.createToC = createToC;
+	}
+	
+	
 	
 }

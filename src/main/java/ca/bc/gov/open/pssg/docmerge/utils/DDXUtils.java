@@ -38,7 +38,7 @@ public class DDXUtils {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static Document createMergeDDX(LinkedList<MergeDoc> pageList) throws Exception {
+	public static Document createMergeDDX(LinkedList<MergeDoc> pageList, boolean addToC) throws Exception {
 
 		Document document = null;
 		try {
@@ -60,10 +60,22 @@ public class DDXUtils {
 			PDFs.setAttribute(DocMergeConstants.DDX_OUTPUT_ATTRIBUTE, DocMergeConstants.DDX_OUTPUT_NAME);
 			root.appendChild(PDFs);
 			
+			// Add ToC?
+			if (addToC) {
+				logger.info("Adding table of contents...");
+				Element ToC = (Element) document.createElement("TableOfContents");
+				ToC.setAttribute("bookmarkTitle", "Table Of Contents");
+				PDFs.appendChild(ToC);
+			}
+			
 			// Add each pageId element to the DDX
 			for (int i = 0; i < pageList.size(); i++) {
 				Element PDF = (Element) document.createElement(DocMergeConstants.DDX_ELEMENT_PDF);
 				PDF.setAttribute(DocMergeConstants.DDX_SOURCE_ATTRIBUTE, pageList.get(i).getId());
+				if (addToC) {
+					PDF.setAttribute("bookmarkTitle", "Document " + (i + 1)); 
+					PDF.setAttribute("includeInTOC", "true");
+				}
 				PDFs.appendChild(PDF);
 			}
 			
