@@ -17,6 +17,7 @@ import springfox.documentation.swagger2.web.Swagger2Controller;
 /**
  * 
  * Do not tamper with this class. 
+ * 
  * Forces application/json content-type due to problem with Swagger 2.9.2 when calling http(s)://host/digitalforms/v2/api-docs 
  * @See https://github.com/springfox/springfox/issues/1835
  *
