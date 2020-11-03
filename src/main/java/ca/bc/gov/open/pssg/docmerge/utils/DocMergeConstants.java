@@ -35,5 +35,11 @@ public final class DocMergeConstants {
 	
 	// AEM connection server types 
 	public static final String DSC_SERVER_TYPE_JBOSS = "JBoss";
+	
+	// Doc Merge validation errors
+	public static final String NO_HANDLER_ERROR = "Request URL does not exist";
+	public static final String UNKNOWN_ERROR = "Unexpected error occured";
+	public static final String MISSING_PARAMS_ERROR = "Missing request params";
+	public static final String MISSING_REQUEST_BODY_ERROR = "Required data not found in the request body";
  
 }
