@@ -21,15 +21,15 @@ AEM version : Sarcee, v6.2.0, GM
 ```json
 {
    "options":{
-      "forcePDFAOnLoad": true,  	<-- Forces XFA document types to PDF/A prior to merge. AEM cannot merge XFA documents (at present)
-      "createToC": true  			<-- Creates first page as Table of Contents.
+      "forcePDFAOnLoad": true,  
+      "createToC": true
    },
    "documents":[
       {
-         "id":"optional",			<-- Document ID. Currently not used by may be used in Future as Bookmark label.
-         "docType":"pdf",			<-- must be 'pdf'. No other document types supported yet.
-         "order":1,					<-- Output order. Starts with 1. Second document is 2, and on. 
-         "data":"SGVsbG9Xb3JsZA==" 	<-- Base64 encoded input document (PDF).
+         "id":"optional",
+         "docType":"pdf",
+         "order":1, 
+         "data":"SGVsbG9Xb3JsZA=="
       },
       {
          "id":"optional",
