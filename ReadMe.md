@@ -18,7 +18,7 @@ https://helpx.adobe.com/aem-forms/6/aem-livecycle-connector.html#AdobeLiveCycleA
 AEM version : Sarcee, v6.2.0, GM
 
 ## Request Example
-
+```json
 {
    "options":{
       "forcePDFAOnLoad": true,  	<-- Forces XFA document types to PDF/A prior to merge. AEM cannot merge XFA documents (at present)
@@ -40,3 +40,4 @@ AEM version : Sarcee, v6.2.0, GM
    ]
 }
 
+'''
