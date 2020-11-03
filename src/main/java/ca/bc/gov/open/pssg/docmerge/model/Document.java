@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "id", "docType", "order", "data" })
 public class Document {
 

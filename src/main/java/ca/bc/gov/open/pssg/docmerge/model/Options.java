@@ -28,7 +28,7 @@ public class Options {
 
 	@JsonProperty("forcePDFAOnLoad")
 	public boolean getForcePDFAOnLoad() {
-		return Boolean.getBoolean(forcePDFAOnLoad);
+		return Boolean.parseBoolean(forcePDFAOnLoad);
 	}
 
 	@JsonProperty("forcePDFAOnLoad")
@@ -38,7 +38,7 @@ public class Options {
 
 	@JsonProperty("createToC")
 	public boolean getCreateToC() {
-		return Boolean.getBoolean(createToC);
+		return Boolean.parseBoolean(createToC);
 	}
 
 	@JsonProperty("createToC")
