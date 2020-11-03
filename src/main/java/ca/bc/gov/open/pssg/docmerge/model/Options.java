@@ -1,6 +1,8 @@
 package ca.bc.gov.open.pssg.docmerge.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -11,33 +13,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * @author shaunmillargov
  *
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "forcePDFAOnLoad", "createToC" })
 public class Options {
 	
+	@NotNull
+	@Pattern(regexp = "^true$|^false$", message = "forcePDFAOnLoad - allowed input: true or false")
 	@JsonProperty("forcePDFAOnLoad")
-	private Boolean forcePDFAOnLoad;
-	
+	private String forcePDFAOnLoad;
+
+	@NotNull
+	@Pattern(regexp = "^true$|^false$", message = "createToC - allowed input: true or false")
 	@JsonProperty("createToC")
-	private Boolean createToC;
+	private String createToC;
 
 	@JsonProperty("forcePDFAOnLoad")
-	public Boolean getForcePDFAOnLoad() {
-		return forcePDFAOnLoad;
+	public boolean getForcePDFAOnLoad() {
+		return Boolean.parseBoolean(forcePDFAOnLoad);
 	}
 
 	@JsonProperty("forcePDFAOnLoad")
-	public void setForcePDFAOnLoad(Boolean forcePDFAOnLoad) {
+	public void setForcePDFAOnLoad(String forcePDFAOnLoad) {
 		this.forcePDFAOnLoad = forcePDFAOnLoad;
 	}
 
 	@JsonProperty("createToC")
-	public Boolean getCreateToC() {
-		return createToC;
+	public boolean getCreateToC() {
+		return Boolean.parseBoolean(createToC);
 	}
 
 	@JsonProperty("createToC")
-	public void setCreateToC(Boolean createToC) {
+	public void setCreateToC(String createToC) {
 		this.createToC = createToC;
 	}
 	

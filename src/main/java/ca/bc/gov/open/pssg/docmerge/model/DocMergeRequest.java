@@ -1,17 +1,22 @@
 package ca.bc.gov.open.pssg.docmerge.model;
 
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.Valid;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 @JsonPropertyOrder({ "options", "documents" })
 public class DocMergeRequest {
 
 	@JsonProperty("options")
+	@Valid
 	private Options options;
+	
 	@JsonProperty("documents")
+	@Valid
 	private List<Document> documents = null;
 
 	@JsonProperty("options")
