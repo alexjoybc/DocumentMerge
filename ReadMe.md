@@ -21,8 +21,8 @@ AEM version : Sarcee, v6.2.0, GM
 ```json
 {
    "options":{
-      "forcePDFAOnLoad": true,  
-      "createToC": true
+      "forcePDFAOnLoad": "true",  
+      "createToC": "true"
    },
    "documents":[
       {
